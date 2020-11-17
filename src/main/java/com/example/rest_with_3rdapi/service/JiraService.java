@@ -46,6 +46,6 @@ public class JiraService {
         header.set("cookie","JSESSIONID="+sessionValue.getSessionValue());
         HttpEntity request = new HttpEntity<>(header);
         return restTemplate.exchange(JIRA_BASE_URL+GET_CURRENT_USER, HttpMethod.GET,request, User.class);
-
     }
+
 }
