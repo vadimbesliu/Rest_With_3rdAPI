@@ -25,6 +25,7 @@ public class URLS {
 
     public static final String CREATE_SESSION = "/createNewSession";
     public static final String AUTH = "/auth";
+
     public static final String CURRENT_USER = "/currentUser";
     public static final String PROJECT = "/project";
     public static final String GET_PROJECT = "rest/api/2/project/";
