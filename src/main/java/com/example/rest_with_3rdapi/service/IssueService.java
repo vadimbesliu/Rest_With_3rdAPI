@@ -2,6 +2,7 @@ package com.example.rest_with_3rdapi.service;
 
 import com.example.rest_with_3rdapi.config.jira.issue.Issue;
 import com.example.rest_with_3rdapi.config.jira.issue.dto.IssueResponse;
+import com.example.rest_with_3rdapi.config.jira.issue.updateissue.Assignee;
 import com.example.rest_with_3rdapi.config.jira.issue.validator.ValidateIssue;
 import com.example.rest_with_3rdapi.exceptions.IssueException;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +32,17 @@ public class IssueService {
                 request,
                 IssueResponse.class).getBody().getId();
     }
+    public String issueAssignee(String issueID,String username){
+        Assignee assignee = new Assignee(username);
+
+        HttpEntity request = new HttpEntity(assignee,getHeader());
+
+         restTemplate.exchange(JIRA_BASE_URL+CREATE_ISSUE+issueID+"/assignee",
+                HttpMethod.PUT,
+                request,
+                IssueResponse.class);
+         return "Assigned to "+ username;
+    }
 
     private HttpHeaders getHeader() {
         jiraService.getSession();
@@ -39,4 +51,6 @@ public class IssueService {
         headers.set("cookie", "JSESSIONID=" + jiraService.sessionValue.getSessionValue());
         return headers;
     }
+
+
 }
