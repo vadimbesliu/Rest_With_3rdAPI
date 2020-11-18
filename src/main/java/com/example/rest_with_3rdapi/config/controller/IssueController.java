@@ -55,4 +55,9 @@ public class IssueController {
         return ResponseEntity.ok(issueService.deleteComment(id, commentID));
     }
 
+    @DeleteMapping(ID)
+    public ResponseEntity<String> deleteIssue(@PathVariable String id) {
+        return ResponseEntity.ok(issueService.deleteIssue(id));
+    }
+
 }

@@ -13,10 +13,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
-import static com.example.rest_with_3rdapi.URLS.CREATE_ISSUE;
-import static com.example.rest_with_3rdapi.URLS.JIRA_BASE_URL;
+import static com.example.rest_with_3rdapi.URLS.*;
 
 @Service
 @RequiredArgsConstructor
@@ -82,6 +82,21 @@ public class IssueService {
         return restTemplate.exchange(JIRA_BASE_URL+CREATE_ISSUE+id+"/comment/"+commentID,
                 HttpMethod.DELETE,request,IssueResponse.class).getStatusCode().toString();
 
+    }
+
+    public String deleteIssue(String issueID){
+        HttpEntity  request = new HttpEntity(getHeader());
+        try {
+            restTemplate.exchange(JIRA_BASE_URL + DELETE_ISSUE.concat(issueID),
+                    HttpMethod.DELETE, request,
+                    String.class);
+            return "Issue with id - " + issueID + " was deleted successfully";
+        } catch (HttpClientErrorException clientErrorException){
+            return "You don't have permission to delete this issue";
+        }
+        catch (Exception  e) {
+            return "No Issue with ID " +issueID;
+        }
     }
 
 
