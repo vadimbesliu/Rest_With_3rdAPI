@@ -1,6 +1,7 @@
 package com.example.rest_with_3rdapi.config.controller;
 
 import com.example.rest_with_3rdapi.config.jira.issue.Issue;
+import com.example.rest_with_3rdapi.config.jira.issue.updateissue.Comment;
 import com.example.rest_with_3rdapi.config.jira.issue.updateissue.UpdateIssue;
 import com.example.rest_with_3rdapi.exceptions.IssueException;
 import com.example.rest_with_3rdapi.service.IssueService;
@@ -28,6 +29,7 @@ public class IssueController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
+
     @PostMapping(ASSIGNED_TO_USER)
     public ResponseEntity<String> assignTo(@PathVariable String id, @PathVariable String username) {
         return ResponseEntity.ok(issueService.issueAssignee(id, username));
@@ -41,8 +43,11 @@ public class IssueController {
             issueException.getMessage();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(issueException.getMessage());
         }
-
     }
 
+    @PostMapping(ADD_COMMENT)
+    public ResponseEntity<String> addComment(@PathVariable String id, @RequestBody Comment comment) {
+        return ResponseEntity.ok(issueService.addComment(id, comment));
+    }
 
 }

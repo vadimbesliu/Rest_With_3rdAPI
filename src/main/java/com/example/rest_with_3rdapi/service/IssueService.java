@@ -3,6 +3,7 @@ package com.example.rest_with_3rdapi.service;
 import com.example.rest_with_3rdapi.config.jira.issue.Issue;
 import com.example.rest_with_3rdapi.config.jira.issue.dto.IssueResponse;
 import com.example.rest_with_3rdapi.config.jira.issue.updateissue.Assignee;
+import com.example.rest_with_3rdapi.config.jira.issue.updateissue.Comment;
 import com.example.rest_with_3rdapi.config.jira.issue.updateissue.UpdateIssue;
 import com.example.rest_with_3rdapi.config.jira.issue.validator.ValidateIssue;
 import com.example.rest_with_3rdapi.exceptions.IssueException;
@@ -33,16 +34,17 @@ public class IssueService {
                 request,
                 IssueResponse.class).getBody().getId();
     }
-    public String issueAssignee(String issueID,String username){
+
+    public String issueAssignee(String issueID, String username) {
         Assignee assignee = new Assignee(username);
 
-        HttpEntity request = new HttpEntity(assignee,getHeader());
+        HttpEntity request = new HttpEntity(assignee, getHeader());
 
-         restTemplate.exchange(JIRA_BASE_URL+CREATE_ISSUE+issueID+"/assignee",
+        restTemplate.exchange(JIRA_BASE_URL + CREATE_ISSUE + issueID + "/assignee",
                 HttpMethod.PUT,
                 request,
                 IssueResponse.class);
-         return "Assigned to "+ username;
+        return "Assigned to " + username;
     }
 
     private HttpHeaders getHeader() {
@@ -56,10 +58,21 @@ public class IssueService {
     public String updateIssue(UpdateIssue updateIssue, String issueID) throws IssueException {
         ValidateIssue.validateUpdateIssue(updateIssue);
 
-        HttpEntity request = new HttpEntity(updateIssue,getHeader());
+        HttpEntity request = new HttpEntity(updateIssue, getHeader());
 
-        return restTemplate.exchange(JIRA_BASE_URL+CREATE_ISSUE+issueID,
+        return restTemplate.exchange(JIRA_BASE_URL + CREATE_ISSUE + issueID,
                 HttpMethod.PUT,
+                request,
+                IssueResponse.class).getStatusCode().toString();
+    }
+
+    public String addComment(String id, Comment comment) {
+
+        HttpEntity request = new HttpEntity(comment, getHeader());
+
+
+        return restTemplate.exchange(JIRA_BASE_URL + CREATE_ISSUE + id + "/comment",
+                HttpMethod.POST,
                 request,
                 IssueResponse.class).getStatusCode().toString();
     }
