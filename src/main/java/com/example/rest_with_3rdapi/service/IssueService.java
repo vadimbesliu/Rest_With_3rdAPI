@@ -77,5 +77,12 @@ public class IssueService {
                 IssueResponse.class).getStatusCode().toString();
     }
 
+    public String deleteComment(String id, String commentID) {
+        HttpEntity request = new HttpEntity(getHeader());
+        return restTemplate.exchange(JIRA_BASE_URL+CREATE_ISSUE+id+"/comment/"+commentID,
+                HttpMethod.DELETE,request,IssueResponse.class).getStatusCode().toString();
+
+    }
+
 
 }

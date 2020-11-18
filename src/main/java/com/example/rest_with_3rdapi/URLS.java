@@ -36,4 +36,6 @@ public class URLS {
     public static final String ALL = "/all";
     public static final String ISSUE_UPDATE = "/{id}/update";
     public static final String ADD_COMMENT = "/{id}/comment";
+
+    public static final String DELETE_COMMENT = "/{id}/comment/{commentID}";
 }
