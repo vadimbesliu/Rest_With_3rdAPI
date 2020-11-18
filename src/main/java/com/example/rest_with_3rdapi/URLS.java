@@ -32,6 +32,7 @@ public class URLS {
     public static final String ISSUE = "/issue";
     public static final String CREATE = "/create";
     public static final String DELETE = "/delete/{id}";
-    public static final String ASSIGNED_TO_USER = "/getTaskAssignedToUser/{username}";
+    public static final String ASSIGNED_TO_USER = "/{id}/assignTo={username}";
     public static final String ALL = "/all";
+    public static final String ISSUE_UPDATE = "/{id}/update";
 }

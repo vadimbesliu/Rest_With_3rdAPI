@@ -1,19 +1,16 @@
 package com.example.rest_with_3rdapi.config.controller;
 
 import com.example.rest_with_3rdapi.config.jira.issue.Issue;
+import com.example.rest_with_3rdapi.config.jira.issue.updateissue.UpdateIssue;
 import com.example.rest_with_3rdapi.exceptions.IssueException;
 import com.example.rest_with_3rdapi.service.IssueService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import static com.example.rest_with_3rdapi.URLS.CREATE;
-import static com.example.rest_with_3rdapi.URLS.ISSUE;
+import static com.example.rest_with_3rdapi.URLS.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -31,9 +28,20 @@ public class IssueController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
-    @PostMapping("/{id}/assignTo={username}")
+    @PostMapping(ASSIGNED_TO_USER)
     public ResponseEntity<String> assignTo(@PathVariable String id, @PathVariable String username) {
         return ResponseEntity.ok(issueService.issueAssignee(id, username));
+    }
+
+    @PutMapping(ISSUE_UPDATE)
+    public ResponseEntity<String> updateIssue(@PathVariable String id, @RequestBody UpdateIssue updateIssue) {
+        try {
+            return ResponseEntity.ok("Status :" + issueService.updateIssue(updateIssue, id) + " Issue was updated");
+        } catch (IssueException issueException) {
+            issueException.getMessage();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(issueException.getMessage());
+        }
+
     }
 
 

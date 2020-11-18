@@ -3,6 +3,7 @@ package com.example.rest_with_3rdapi.service;
 import com.example.rest_with_3rdapi.config.jira.issue.Issue;
 import com.example.rest_with_3rdapi.config.jira.issue.dto.IssueResponse;
 import com.example.rest_with_3rdapi.config.jira.issue.updateissue.Assignee;
+import com.example.rest_with_3rdapi.config.jira.issue.updateissue.UpdateIssue;
 import com.example.rest_with_3rdapi.config.jira.issue.validator.ValidateIssue;
 import com.example.rest_with_3rdapi.exceptions.IssueException;
 import lombok.RequiredArgsConstructor;
@@ -50,6 +51,17 @@ public class IssueService {
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set("cookie", "JSESSIONID=" + jiraService.sessionValue.getSessionValue());
         return headers;
+    }
+
+    public String updateIssue(UpdateIssue updateIssue, String issueID) throws IssueException {
+        ValidateIssue.validateUpdateIssue(updateIssue);
+
+        HttpEntity request = new HttpEntity(updateIssue,getHeader());
+
+        return restTemplate.exchange(JIRA_BASE_URL+CREATE_ISSUE+issueID,
+                HttpMethod.PUT,
+                request,
+                IssueResponse.class).getStatusCode().toString();
     }
 
 
