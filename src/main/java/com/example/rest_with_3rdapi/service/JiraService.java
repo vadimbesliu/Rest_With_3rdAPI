@@ -1,11 +1,10 @@
 package com.example.rest_with_3rdapi.service;
 
-import com.example.rest_with_3rdapi.config.jira.Credentials;
-import com.example.rest_with_3rdapi.config.jira.SessionResponse;
-import com.example.rest_with_3rdapi.config.jira.SessionValue;
-import com.example.rest_with_3rdapi.config.jira.User;
+import com.example.rest_with_3rdapi.jira.Credentials;
+import com.example.rest_with_3rdapi.jira.SessionResponse;
+import com.example.rest_with_3rdapi.jira.SessionValue;
+import com.example.rest_with_3rdapi.jira.User;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -13,7 +12,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.example.rest_with_3rdapi.URLS.*;
+import static com.example.rest_with_3rdapi.utils.urls.*;
 
 @Service
 @RequiredArgsConstructor

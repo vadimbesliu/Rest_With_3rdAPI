@@ -1,6 +1,6 @@
 package com.example.rest_with_3rdapi.service;
 
-import com.example.rest_with_3rdapi.config.jira.Project;
+import com.example.rest_with_3rdapi.jira.Project;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -11,8 +11,8 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Optional;
 
-import static com.example.rest_with_3rdapi.URLS.GET_PROJECT;
-import static com.example.rest_with_3rdapi.URLS.JIRA_BASE_URL;
+import static com.example.rest_with_3rdapi.utils.urls.GET_PROJECT;
+import static com.example.rest_with_3rdapi.utils.urls.JIRA_BASE_URL;
 
 @Service
 @RequiredArgsConstructor
